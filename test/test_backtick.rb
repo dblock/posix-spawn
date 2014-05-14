@@ -28,9 +28,12 @@ class BacktickTest < Test::Unit::TestCase
     assert_equal 127, $?.exitstatus, 127
   end
 
-  def test_backtick_huge
-    out = `yes | head -50000`
-    assert_equal 100000, out.size
-    assert_equal 0, $?.exitstatus
+  # https://github.com/rtomayko/posix-spawn/issues/53
+  unless (/darwin/ =~ RUBY_PLATFORM)
+    def test_backtick_huge
+      out = `yes | head -50000`
+      assert_equal 100000, out.size
+      assert_equal 0, $?.exitstatus
+    end
   end
 end
