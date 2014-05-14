@@ -1,3 +1,5 @@
+#include <ruby.h>
+
 /* we want GNU extensions like POSIX_SPAWN_USEVFORK */
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -11,7 +13,6 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <ruby.h>
 
 #ifdef RUBY_VM
 #include <ruby/st.h>
