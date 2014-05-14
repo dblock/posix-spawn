@@ -68,9 +68,12 @@ class ChildTest < Test::Unit::TestCase
     end
   end
 
-  def test_max_with_stubborn_child
-    assert_raise MaximumOutputExceeded do
-      Child.new("trap '' TERM; yes", :max => 100_000)
+  # https://github.com/rtomayko/posix-spawn/issues/52
+  unless (/darwin/ =~ RUBY_PLATFORM)
+    def test_max_with_stubborn_child
+      assert_raise MaximumOutputExceeded do
+        Child.new("trap '' TERM; yes", :max => 100_000)
+      end
     end
   end
 
@@ -79,7 +82,8 @@ class ChildTest < Test::Unit::TestCase
     assert_raise TimeoutExceeded do
       Child.new('sleep', '1', :timeout => 0.05)
     end
-    assert (Time.now-start) <= 0.2
+    diff = Time.now - start
+    assert diff <= 0.2, "expected diff of #{diff} to be <= 0.2"
   end
 
   def test_timeout_with_child_hierarchy
