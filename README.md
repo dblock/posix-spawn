@@ -1,5 +1,7 @@
 # posix-spawn
 
+[![Build Status](https://travis-ci.org/rtomayko/posix-spawn.svg)](https://travis-ci.org/rtomayko/posix-spawn)
+
 `fork(2)` calls slow down as the parent process uses more memory due to the need
 to copy page tables. In many common uses of fork(), where it is followed by one
 of the exec family of functions to spawn child processes (`Kernel#system`,
